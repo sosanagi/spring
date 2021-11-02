@@ -1,8 +1,7 @@
 package com.example;
 
-import com.example.app.Argument;
-import com.example.app.ArgumentResolver;
-import com.example.app.Calculator;
+import com.example.domain.Customer;
+import com.example.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -11,16 +10,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HajibootDIApplication implements CommandLineRunner{
     @Autowired
-    ArgumentResolver argumentResolver;
-    @Autowired
-    Calculator calculator;
+    CustomerService customerService;
 
     @Override
     public void run(String... strings) throws Exception {
-        System.out.print("Enter 2 numbers like 'a b' :");
-        Argument argument = argumentResolver.resolve(System.in);
-        int result = calculator.calc(argument.getA(), argument.getB());
-        System.out.println("result = " + result);
+        customerService.save(new Customer(1, "Nobita", "Nobi"));
+        customerService.save(new Customer(2, "Takeshi", "Goda"));
+        customerService.save(new Customer(3, "Suneo", "Honekawa"));
+
+        customerService.findAll().forEach(System.out::println);
     }
 
     public static void main(String[] args) {
