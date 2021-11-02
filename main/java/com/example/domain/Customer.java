@@ -8,6 +8,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class Customer implements Serializable{
     private Integer id;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
 }
