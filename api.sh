@@ -18,7 +18,7 @@
 # curl http://localhost:8080/api/customers/1 -w "\n"
 
 # echo "2.3.3"
-curl http://localhost:8080/api/customers/ -i -XGET -w "\n"
-echo "pageing"
-curl 'http://localhost:8080/api/customers/?page=0&size=3' -i -XGET -w "\n" | jq -r -R 'fromjson?'
-curl 'http://localhost:8080/api/customers/?page=1&size=2' -i -XGET -w "\n" | jq -r -R 'fromjson?'
+# curl http://localhost:8080/api/customers/ -i -XGET -w "\n"
+# echo "pageing"
+# curl 'http://localhost:8080/api/customers/?page=0&size=3' -i -XGET -w "\n" | jq -r -R 'fromjson?'
+# curl 'http://localhost:8080/api/customers/?page=1&size=2' -i -XGET -w "\n" | jq -r -R 'fromjson?'
