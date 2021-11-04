@@ -25,10 +25,10 @@ public class CustomerController {
     //     this.customerService = customerService;
     // }
 
-    // @ModelAttribute
-    // CustomerForm setUpForm() {
-    //     return new CustomerForm();
-    // }
+    @ModelAttribute
+    CustomerForm setUpForm() {
+        return new CustomerForm();
+    }
 
     @GetMapping
     public String list(Model model) {
@@ -37,16 +37,16 @@ public class CustomerController {
         return "customers/list";
     }
 
-    // @PostMapping(path = "create")
-    // public String create(@Validated CustomerForm form, BindingResult result, Model model) {
-    //     if (result.hasErrors()) {
-    //         return list(model);
-    //     }
-    //     Customer customer = new Customer();
-    //     BeanUtils.copyProperties(form, customer);
-    //     customerService.create(customer);
-    //     return "redirect:/customers";
-    // }
+    @PostMapping(path = "create")
+    public String create(@Validated CustomerForm form, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return list(model);
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(form, customer);
+        customerService.create(customer);
+        return "redirect:/customers";
+    }
 
     // @GetMapping(path = "edit", params = "form")
     // public String editForm(@RequestParam Integer id, CustomerForm form) {
