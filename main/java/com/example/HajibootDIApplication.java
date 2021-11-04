@@ -18,7 +18,7 @@ public class HajibootDIApplication implements CommandLineRunner {
         Customer created = customerRepository.save(new Customer(null, "Hidetoshi", "Dekisugi"));
         System.out.println(created + " is created!");
 
-        customerRepository.findAll().forEach(System.out::println);
+        customerRepository.findAllOrderByName().forEach(System.out::println);
     }
 
     public static void main(String[] args) {
