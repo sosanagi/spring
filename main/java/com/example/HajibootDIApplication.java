@@ -21,8 +21,9 @@ public class HajibootDIApplication implements CommandLineRunner {
         Customer created = customerRepository.save(new Customer(null, "Hidetoshi", "Dekisugi"));
         System.out.println(created + " is created!");
 
+        // @see https://stackoverflow.com/questions/44848653/pagerequest-constructors-have-been-deprecated
         Pageable pageable = PageRequest.of(0,3);
-        Page<Customer> page = customerRepository.findAll(pageable);
+        Page<Customer> page = customerRepository.findAllOrderByName(pageable);
         System.out.println("1ページのデータ数=" + page.getSize());
         System.out.println("現在のページ=" + page.getNumber());
         System.out.println("全ページ数=" + page.getTotalPages());

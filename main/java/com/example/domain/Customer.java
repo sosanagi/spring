@@ -13,7 +13,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Customer{
     @Id
-    @GeneratedValue
+    // @see https://teratail.com/questions/124945
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
     @Column(nullable = false)
     private String firstName;
