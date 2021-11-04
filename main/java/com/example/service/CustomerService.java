@@ -1,40 +1,36 @@
 package com.example.service;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.example.domain.Customer;
+import com.example.repository.CustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.domain.Customer;
-import com.example.repository.CustomerRepository;
+import java.util.List;
 
 @Service
 @Transactional
 public class CustomerService {
-	private final CustomerRepository customerRepository;
+    @Autowired
+    CustomerRepository customerRepository;
 
-	public CustomerService(CustomerRepository customerRepository) {
-		this.customerRepository = customerRepository;
-	}
+    public List<Customer> findAll() {
+        return customerRepository.findAllOrderByName();
+    }
 
-	public List<Customer> findAll() {
-		return customerRepository.findAllOrderByName();
-	}
+    public Customer findOne(Integer id) {
+        return customerRepository.getById(id);
+    }
 
-	public Optional<Customer> findOne(Integer id) {
-		return customerRepository.findById(id);
-	}
+    public Customer create(Customer customer) {
+        return customerRepository.save(customer);
+    }
 
-	public Customer create(Customer customer) {
-		return customerRepository.save(customer);
-	}
+    public Customer update(Customer customer) {
+        return customerRepository.save(customer);
+    }
 
-	public Customer update(Customer customer) {
-		return customerRepository.save(customer);
-	}
-
-	public void delete(Integer id) {
-		customerRepository.deleteById(id);
-	}
+    public void delete(Integer id) {
+        customerRepository.deleteById(id);
+    }
 }
