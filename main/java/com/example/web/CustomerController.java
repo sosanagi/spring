@@ -2,8 +2,11 @@ package com.example.web;
 
 import com.example.domain.Customer;
 import com.example.service.CustomerService;
+import com.example.service.LoginUserDetails;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,15 +34,16 @@ public class CustomerController {
     }
 
     @PostMapping(path = "create")
-    String create(@Validated CustomerForm form, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return list(model);
-        }
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(form, customer);
-        customerService.create(customer);
-        return "redirect:/customers";
-    }
+	public String create(@Validated CustomerForm form, BindingResult result, Model model,
+			@AuthenticationPrincipal LoginUserDetails userDetails) {
+		if (result.hasErrors()) {
+			return list(model);
+		}
+		Customer customer = new Customer();
+		BeanUtils.copyProperties(form, customer);
+		customerService.create(customer, userDetails.getUser());
+		return "redirect:/customers";
+	}
 
     @GetMapping(path = "edit", params = "form")
     String editForm(@RequestParam Integer id, CustomerForm form) {
@@ -49,16 +53,17 @@ public class CustomerController {
     }
 
     @PostMapping(path = "edit")
-    String edit(@RequestParam Integer id, @Validated CustomerForm form, BindingResult result) {
-        if (result.hasErrors()) {
-            return editForm(id, form);
-        }
-        Customer customer = new Customer();
-        BeanUtils.copyProperties(form, customer);
-        customer.setId(id);
-        customerService.update(customer);
-        return "redirect:/customers";
-    }
+	public String edit(@RequestParam Integer id, @Validated CustomerForm form,
+			BindingResult result, @AuthenticationPrincipal LoginUserDetails userDetails) {
+		if (result.hasErrors()) {
+			return editForm(id, form);
+		}
+		Customer customer = new Customer();
+		BeanUtils.copyProperties(form, customer);
+		customer.setId(id);
+		customerService.update(customer, userDetails.getUser());
+		return "redirect:/customers";
+	}
 
     @GetMapping(path = "edit", params = "goToTop")
     String goToTop() {
